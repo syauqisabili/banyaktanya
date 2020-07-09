@@ -3,8 +3,15 @@
 @extends('master')
 
 @section('content')
-  <!-- Tombol Mulai Bertanya -->
-  <a href="/q" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Mulai Bertanya</a>
+<div class="Container mr-2 ml-2">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Pertanyaan Populer</h5>
+      <p class="card-text">Jangan ragu untuk mulai bertanya</p>
+      <a href="/q" class="btn btn-primary">Mulai Bertanya</a>
+    </div>
+  </div>
+
 
   <!-- Nanti list banyak pertanyaan-->
   <table class="table">
@@ -37,6 +44,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 @endsection
 
 @push('script')
