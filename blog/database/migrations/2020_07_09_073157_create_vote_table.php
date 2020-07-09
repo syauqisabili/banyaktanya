@@ -30,16 +30,16 @@ class CreateVoteTable extends Migration
                     ->onUpdate('cascade');
 
             //foreign key ke tabel pertanyaan
-            $table  ->foreign('pertanyaan')
+            $table  ->foreign('pertanyaan_id')
                     ->references('id')
-                    ->on('users')
+                    ->on('pertanyaan')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
 
              //foreign key ke tabel jawaban
             $table  ->foreign('jawaban_id')
                     ->references('id')
-                    ->on('users')
+                    ->on('jawaban')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
 

@@ -16,6 +16,7 @@ class CreateReputasiTable extends Migration
         Schema::create('reputasi', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('reputasi');
+            $table->unsignedBigInteger('user_id');
 
             //foreign key ke tabel users
             $table  ->foreign('user_id')

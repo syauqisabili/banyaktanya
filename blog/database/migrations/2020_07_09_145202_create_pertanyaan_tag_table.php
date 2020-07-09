@@ -29,7 +29,7 @@ class CreatePertanyaanTagTable extends Migration
             //foreign key ke tabel tag
             $table  ->foreign('tag_id')
                     ->references('id')
-                    ->on('users')
+                    ->on('tag')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
         });
