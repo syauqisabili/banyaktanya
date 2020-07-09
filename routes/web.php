@@ -12,7 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/pertanyaan');
 });
 
-Route::resource('/pertanyaan', 'PertanyaanController');
+Route::group(['middleware' => ['auth']], function () {
+
+    /**
+     * 1 Paket CRUD meliputi
+     * GET      /pertanyaan             .index
+     * POST     /pertanyaan             .store
+     * GET      /pertanyaan/create      .create
+     * GET      /pertanyaan/{id}        .show
+     * PUT      /pertanyaan/{id}        .update
+     * DELETE   /pertanyaan/{id}        .destroy
+     * GET      /pertanyaan/{id}/edit   .edit
+     */
+    Route::resource('/pertanyaan', 'PertanyaanController');
+});
+
