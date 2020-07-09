@@ -20,9 +20,16 @@ class CreatePertanyaansTable extends Migration
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pertanyaan_id');
 
             //Foreign key ke tabel users
             $table  ->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
+            $table  ->foreign('pertanyaan_id')
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade')
