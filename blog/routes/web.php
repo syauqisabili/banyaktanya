@@ -15,18 +15,22 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/q', function () {
+Route::get('/home', function () {
+    return view('home');
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/question', function () {
     return view('question');
 });
 
-Route::get('/ans', function () {
+Route::get('/answer', function () {
     return view('answer');
 });
 
 Route::get('/master', function () {
     return view('master');
-});
-
-Route::get('/welcome', function () {
-    return view('welcome');
 });

@@ -8,7 +8,7 @@
     <div class="card-body">
       <h5 class="card-title">Pertanyaan Populer</h5>
       <p class="card-text">Jangan ragu untuk mulai bertanya</p>
-      <a href="/q" class="btn btn-primary">Mulai Bertanya</a>
+      <a href="/question" class="btn btn-primary">Mulai Bertanya</a>
     </div>
   </div>
 
