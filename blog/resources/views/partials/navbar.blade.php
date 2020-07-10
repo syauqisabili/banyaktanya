@@ -9,10 +9,10 @@
       <a href="/" class="nav-link">Beranda</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="/q" class="nav-link">Pertanyaan</a>
+      <a href="/question" class="nav-link">Pertanyaan</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="/ans" class="nav-link">Jawaban</a>
+      <a href="/answer" class="nav-link">Jawaban</a>
     </li>
   </ul>
 

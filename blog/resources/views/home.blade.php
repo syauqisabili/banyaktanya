@@ -6,7 +6,7 @@
 <div class="Container mr-2 ml-2">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Pertanyaan Populer</h5>
+      <h5 class="card-title">Apa yang sedang kamu bingungkan?</h5>
       <p class="card-text">Jangan ragu untuk mulai bertanya</p>
       <a href="/question" class="btn btn-primary">Mulai Bertanya</a>
     </div>
@@ -14,36 +14,16 @@
 
 
   <!-- Nanti list banyak pertanyaan-->
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+  <div class="row">
+
+  </div>
+  <div class="card">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
 </div>
 @endsection
 
