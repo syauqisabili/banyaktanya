@@ -16,13 +16,13 @@ class CreatePertanyaanTagTable extends Migration
         Schema::create('pertanyaan_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pertanyaan_id');
             $table->unsignedBigInteger('tag_id');
 
             //foreign key ke tabel users
-            $table  ->foreign('user_id')
+            $table  ->foreign('pertanyaan_id')
                     ->references('id')
-                    ->on('users')
+                    ->on('pertanyaan')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
 

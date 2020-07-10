@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Pertanyaan;
+use App\Tag;
 
 class PertanyaanController extends Controller
 {
@@ -13,7 +16,8 @@ class PertanyaanController extends Controller
      */
     public function index()
     {
-        //
+        $items = Pertanyaan::orderBy('id', 'desc')->get();
+        return view('questions.index', compact('items'));
     }
 
     /**
@@ -23,7 +27,7 @@ class PertanyaanController extends Controller
      */
     public function create()
     {
-        //
+        return view('questions.create');
     }
 
     /**
@@ -34,7 +38,26 @@ class PertanyaanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $str_tag = $request->tag_pertanyaan;
+        $arr_tag = explode(',', $str_tag);
+
+        Pertanyaan::create([
+            'judul' => $request->judul,
+            'isi_pertanyaan' => $request->isi_pertanyaan,
+            'user_id' => Auth::id(),
+        ]);
+
+        $question = Pertanyaan::all()->last();
+
+        foreach( $arr_tag as $key => $item ) {
+            $tag = Tag::firstOrCreate([
+                'name' => $item,
+            ]);
+
+            $question->tags()->attach($tag);
+        }
+
+        return redirect()->route('pertanyaan.index')->with('pesan', 'Pertanyaan telah disimpan');
     }
 
     /**
@@ -45,7 +68,8 @@ class PertanyaanController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Pertanyaan::findOrFail($id);
+        return view('questions.show', compact('item'));
     }
 
     /**
@@ -56,7 +80,16 @@ class PertanyaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tags = [];
+        $item = Pertanyaan::findOrFail($id);
+
+        foreach( $item->tags->toArray() as $value ) {
+            $tags[] = $value['name'];
+        }
+
+        $tag = implode(',', $tags);
+
+        return view('questions.edit', compact('item', 'tag'));
     }
 
     /**
@@ -68,7 +101,13 @@ class PertanyaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = Pertanyaan::findOrFail($id);
+        $item->update([
+            'judul' => $request->judul,
+            'isi_pertanyaan' => $request->isi_pertanyaan
+        ]);
+
+        return redirect()->route('pertanyaan.show', [$item->id])->with('pesan', 'Pertanyaan telah diupdate');
     }
 
     /**
@@ -79,6 +118,7 @@ class PertanyaanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pertanyaan::findOrFail($id)->delete();
+        return redirect()->route('pertanyaan.index')->with('pesan', 'Pertanyaan telah dihapus');
     }
 }

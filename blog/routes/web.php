@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('/pertanyaan');
-});
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+
+// Route::get('/', function () {
+//     return view('/pertanyaan');
+// });
+
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -27,9 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
      * DELETE   /pertanyaan/{id}        .destroy
      * GET      /pertanyaan/{id}/edit   .edit
      */
+    Route::resource('/user', 'UserController');
     Route::resource('/pertanyaan', 'PertanyaanController');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
