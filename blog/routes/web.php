@@ -29,3 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
      */
     Route::resource('/pertanyaan', 'PertanyaanController');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
