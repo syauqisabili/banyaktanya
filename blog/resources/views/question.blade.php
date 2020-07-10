@@ -4,6 +4,7 @@
 @section('content')
 <div class="container">
   <h3><br>Tuliskan pertanyaan umum</h3>
+
   <form class="question-form" action="/answer" method="post">
     <div class="form-group">
       <label for="question-judul">Judul</label>

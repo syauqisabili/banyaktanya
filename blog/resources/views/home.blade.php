@@ -1,3 +1,4 @@
+
 <!-- Ini adalah tampilan awal -->
 
 @extends('master')

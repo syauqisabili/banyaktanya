@@ -12,25 +12,24 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('/pertanyaan');
 });
 
-Route::get('/home', function () {
-    return view('home');
+Route::group(['middleware' => ['auth']], function () {
+
+    /**
+     * 1 Paket CRUD meliputi
+     * GET      /pertanyaan             .index
+     * POST     /pertanyaan             .store
+     * GET      /pertanyaan/create      .create
+     * GET      /pertanyaan/{id}        .show
+     * PUT      /pertanyaan/{id}        .update
+     * DELETE   /pertanyaan/{id}        .destroy
+     * GET      /pertanyaan/{id}/edit   .edit
+     */
+    Route::resource('/pertanyaan', 'PertanyaanController');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Auth::routes();
 
-Route::get('/question', function () {
-    return view('question');
-});
-
-Route::get('/answer', function () {
-    return view('answer');
-});
-
-Route::get('/master', function () {
-    return view('master');
-});
+Route::get('/home', 'HomeController@index')->name('home');

@@ -2,6 +2,7 @@
 @extends('master')
 
 @section('content')
+
 <div class="container">
   <h3><br>Tuliskan jawaban Anda</h3>
   <form class="question-form" action="/answer" method="post">
