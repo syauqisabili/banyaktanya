@@ -25,5 +25,25 @@
                 </div>
             @endif
         </div>
+
+        <div class="bg-white my-3 p-3">
+            <form action="{{ route('jawaban.create') }}" method="post">
+                <div class="form-group">
+                    <label for="jawaban">Tulis Jawaban</label>
+                    <textarea name="isi_jawaban" id="jawaban" cols="30" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-sm">Posting Jawaban</button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
+@push('js')
+    <script src="{{ asset('plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+    <script>
+        tinymce.init({
+            selector: '#jawaban'
+        });
+    </script>
+@endpush
