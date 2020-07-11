@@ -16,12 +16,14 @@
                 </span>
                 <span class="d-block"><small><em>{{ date('l, d F Y', strtotime($item->created_at)) }}</small></em></span>
             </div>
-            <div class="d-inline">
-                <a class="mr-1 btn btn-primary btn-sm" href="{{ route('pertanyaan.edit', [$item->id]) }}">Edit</a>
-                <form class="d-inline-block" action="{{ route('pertanyaan.edit', [$item->id]) }}" method="post">
-                    <button class="btn btn-danger btn-sm">Hapus</button>
-                </form>
-            </div>
+            @if ( $user->questionOwner($item) )
+                <div class="d-inline">
+                    <a class="mr-1 btn btn-primary btn-sm" href="{{ route('pertanyaan.edit', [$item->id]) }}">Edit</a>
+                    <form class="d-inline-block" action="{{ route('pertanyaan.edit', [$item->id]) }}" method="post">
+                        <button class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

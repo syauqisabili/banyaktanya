@@ -9,7 +9,7 @@
     <div class="card-body">
       <h5 class="card-title">Apa yang sedang kamu bingungkan?</h5>
       <p class="card-text">Jangan ragu untuk mulai bertanya</p>
-      <a href="/question" class="btn btn-primary">Mulai Bertanya</a>
+      <a href="{{ route('pertanyaan.create') }}" class="btn btn-primary">Mulai Bertanya</a>
     </div>
   </div>
 

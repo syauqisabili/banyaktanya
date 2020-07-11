@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Pertanyaan;
+use App\User;
 use App\Tag;
 
 class PertanyaanController extends Controller
@@ -68,8 +69,9 @@ class PertanyaanController extends Controller
      */
     public function show($id)
     {
+        $user = new User;
         $item = Pertanyaan::findOrFail($id);
-        return view('questions.show', compact('item'));
+        return view('questions.show', compact('item', 'user'));
     }
 
     /**
