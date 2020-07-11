@@ -47,7 +47,12 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        $reputasi = 0;
+        foreach( $user->reputations as $item ) {
+            $reputasi += $item->reputasi;
+        }
+
+        return view('users.show', compact('user', 'reputasi'));
     }
 
     /**

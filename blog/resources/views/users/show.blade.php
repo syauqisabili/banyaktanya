@@ -18,6 +18,7 @@
                             <div class="p-4" style="min-height: 200px">
                                 <h3>{{ $user->name }}</h3>
                                 <p>{{ $user->email }}</p>
+                                <p>Reputasi: {{ $reputasi }}</p>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab">

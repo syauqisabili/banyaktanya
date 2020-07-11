@@ -38,13 +38,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function questionOwner($item)
+    public function isOwner($item)
     {
         return Auth::id() == $item->user->id;
+    }
+
+    public function reputations()
+    {
+        return $this->hasMany('App\Reputasi');
     }
 
     public function questions()
     {
         return $this->hasMany('App\Pertanyaan');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany('App\Jawaban');
     }
 }
