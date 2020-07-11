@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Pertanyaan;
-use App\Reputasi;
-use App\Jawaban;
+use App\Komentar;
 
-class JawabanController extends Controller
+class KomentarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +15,7 @@ class JawabanController extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -27,7 +25,7 @@ class JawabanController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -38,13 +36,13 @@ class JawabanController extends Controller
      */
     public function store(Request $request)
     {
-        Jawaban::create([
-            'isi_jawaban' => $request->isi_jawaban,
+        Komentar::create([
+            'isi_komentar' => $request->isi_komentar,
             'user_id' => Auth::id(),
-            'pertanyaan_id' => $request->pertanyaan_id
+            'jawaban_id' => $request->jawaban_id
         ]);
 
-        return redirect()->back()->with('pesan', 'Jawaban telah di posting');
+        return redirect()->back()->with('pesan', 'Komentar telah di posting');
     }
 
     /**
@@ -55,7 +53,7 @@ class JawabanController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -66,7 +64,7 @@ class JawabanController extends Controller
      */
     public function edit($id)
     {
-        // 
+        //
     }
 
     /**
@@ -78,17 +76,7 @@ class JawabanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $answer = Jawaban::findOrFail($id);
-        $answer->update([
-            'status' => true
-        ]);
-
-        Reputasi::create([
-            'reputasi' => 15,
-            'user_id' => $answer->user_id
-        ]);
-
-        return redirect()->back()->with('pesan', 'Jawaban ini telah dipilih menjadi jawaban terbaik');
+        //
     }
 
     /**
@@ -99,7 +87,7 @@ class JawabanController extends Controller
      */
     public function destroy($id)
     {
-        Jawaban::findOrFail($id)->delete();
-        return redirect()->back()->with('pesan', 'Jawaban telah dihapus');
+        Komentar::findOrFail($id)->delete();
+        return redirect()->back()->with('pesan', 'Komentar telah dihapus');
     }
 }
