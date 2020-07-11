@@ -23,4 +23,9 @@ class Jawaban extends Model
     {
         return $this->hasMany('App\Komentar');
     }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Vote');
+    }
 }

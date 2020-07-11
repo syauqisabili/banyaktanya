@@ -47,10 +47,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $reputasi = 0;
-        foreach( $user->reputations as $item ) {
-            $reputasi += $item->reputasi;
-        }
+        $minus = $user->reputations->sum('minus') == null ? 0 : $user->reputations->sum('minus');
+        $reputasi = $user->reputations->sum('reputasi') == null ? 0 : $user->reputations->sum('reputasi');
+        $reputasi = $reputasi - $minus; 
 
         return view('users.show', compact('user', 'reputasi'));
     }

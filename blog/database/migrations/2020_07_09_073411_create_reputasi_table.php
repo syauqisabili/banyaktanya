@@ -15,7 +15,8 @@ class CreateReputasiTable extends Migration
     {
         Schema::create('reputasi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('reputasi');
+            $table->integer('reputasi')->nullable();
+            $table->integer('minus')->nullable();
             $table->unsignedBigInteger('user_id');
 
             //foreign key ke tabel users

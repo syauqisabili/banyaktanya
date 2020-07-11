@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Pertanyaan;
+use App\Reputasi;
+use App\Vote;
 use App\User;
 use App\Tag;
 
@@ -71,7 +73,11 @@ class PertanyaanController extends Controller
     {
         $user = new User;
         $item = Pertanyaan::findOrFail($id);
-        return view('questions.show', compact('item', 'user'));
+        $upvote = $item->votes->sum('upvote') == null ? 0 : $item->votes->sum('upvote');
+        $downvote = $item->votes->sum('downvote') == null ? 0 : $item->votes->sum('downvote');
+        $vote = $upvote - $downvote;
+
+        return view('questions.show', compact('item', 'user', 'vote'));
     }
 
     /**
@@ -122,5 +128,60 @@ class PertanyaanController extends Controller
     {
         Pertanyaan::findOrFail($id)->delete();
         return redirect()->route('pertanyaan.index')->with('pesan', 'Pertanyaan telah dihapus');
+    }
+
+    public function questionUpvote(Request $request)
+    {
+        $vote = Vote::where('user_id', Auth::id())->get();
+        if (count($vote) > 0 ) {
+            foreach ( $vote as $value ) {
+                if ( $value->upvote == 1 && $value->pertanyaan_id == $request->pertanyaan_id ) return redirect()->back();
+            }
+        } 
+        
+        Vote::create([
+            'upvote' => 1,
+            'user_id' => Auth::id(),
+            'pertanyaan_id' => $request->pertanyaan_id
+        ]);
+
+        $item = Vote::all()->last();
+        
+        Reputasi::create([
+            'reputasi' => 10,
+            'user_id' => $item->pertanyaan->user_id
+        ]);
+
+        return redirect()->route('pertanyaan.show', [$request->pertanyaan_id]);
+    }
+
+    public function questionDownvote(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        if ( $user->reputations->sum('reputasi') <= 15 ) { 
+            return redirect()->back()->with('pesan', 'Reputasi anda kurang dari 15');
+        }
+        
+        $vote = Vote::where('user_id', Auth::id())->get();
+        if (count($vote) > 0 ) {
+            foreach ( $vote as $value ) {
+                if ( $value->downvote == 1 && $value->pertanyaan_id == $request->pertanyaan_id ) return redirect()->back();
+            }
+        } 
+
+        Vote::create([
+            'downvote' => 1,
+            'user_id' => Auth::id(),
+            'pertanyaan_id' => $request->pertanyaan_id
+        ]);
+
+        $item = Vote::all()->last();
+        
+        Reputasi::create([
+            'minus' => 1,
+            'user_id' => $item->pertanyaan->user_id
+        ]);
+
+        return redirect()->route('pertanyaan.show', [$request->pertanyaan_id]);
     }
 }

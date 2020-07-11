@@ -3,8 +3,35 @@
 @section('content')
     <div class="container">
         <div class="bg-white shadow-sm rounded p-3">
-            <h4>{{ $item->judul }}</h4>
-            <p>{{ $item->isi_pertanyaan }}</p>
+            <div class="pb-3">
+                <div class="d-flex">
+                    <div class="pr-2">
+                        <form action="{{ route('pertanyaan.upvote') }}" method="post">
+                            @csrf
+                            <span class="d-block">
+                                <input type="hidden" name="pertanyaan_id" value="{{ $item->id }}">
+                                <button class="btn btn-sm">
+                                    <i class="fas fa-caret-up" style="font-size: 30px"></i>
+                                </button>
+                            </span>
+                        </form>
+                        <h1><span class="badge badge-danger text-white">{{ $vote }}</span></h1>
+                        <form action="{{ route('pertanyaan.downvote') }}" method="post">
+                            @csrf
+                            <span class="d-block">
+                                <button class="btn btn-sm">
+                                    <input type="hidden" name="pertanyaan_id" value="{{ $item->id }}">
+                                    <i class="fas fa-caret-down" style="font-size: 30px"></i>
+                                </button>
+                            </span>
+                        </form>
+                    </div>
+                    <div class="pl-3 pt-3">
+                        <h4>{{ $item->judul }}</h4>
+                        <p>{{ $item->isi_pertanyaan }}</p>
+                    </div>
+                </div>
+            </div>
             <div class="pb-3">
                 <span class="d-block"><i class="fas fa-tags"></i> 
                     @foreach ($item->tags as $tag)

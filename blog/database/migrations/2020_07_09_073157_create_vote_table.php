@@ -15,12 +15,12 @@ class CreateVoteTable extends Migration
     {
         Schema::create('vote', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('upvote');
-            $table->unsignedInteger('downvote');
+            $table->unsignedInteger('upvote')->nullable();
+            $table->unsignedInteger('downvote')->nullable();
 
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('pertanyaan_id');
-            $table->unsignedBigInteger('jawaban_id');
+            $table->unsignedBigInteger('pertanyaan_id')->nullable();
+            $table->unsignedBigInteger('jawaban_id')->nullable();
 
             //foreign key ke tabel users
             $table  ->foreign('user_id')
