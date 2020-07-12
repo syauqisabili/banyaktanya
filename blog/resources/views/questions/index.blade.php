@@ -16,7 +16,7 @@
                         <div class="bg-white p-3 shadow-sm w-100 rounded mb-3">
                             <h4>{{ $item->judul }}</h4>
                             <p>{{ $item->isi_pertanyaan }}</p>
-                            <p><a href="{{ route('pertanyaan.show', [$item->id]) }}">Lihat Detail</a></p>
+                            <p><a href="{{ route('pertanyaan.show', [$item->id]) }}">Lihat Detail</a> <span class="d-inline-block ml-3">{{ count($item->answers) }} Jawaban</span></p>
                         </div>
                     @endforeach
                 </div>
