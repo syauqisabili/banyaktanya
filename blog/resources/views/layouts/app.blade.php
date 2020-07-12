@@ -64,9 +64,9 @@
                                   <a class="dropdown-item" href="{{ route('pertanyaan.create') }}">
                                       {{ __('Buat Pertanyaan') }}
                                   </a>
-                                  <a class="dropdown-item" >
+                                  {{-- <a class="dropdown-item" >
                                       Reputasi: {{ $reputasi ?? '' }}
-                                  </a>
+                                  </a> --}}
                                   <a class="dropdown-item" href="{{ route('logout') }}"
                                      onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">

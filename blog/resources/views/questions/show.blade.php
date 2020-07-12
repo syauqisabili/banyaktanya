@@ -28,7 +28,9 @@
                     </div>
                     <div class="pl-3 pt-3">
                         <h4>{{ $item->judul }}</h4>
-                        <p>{{ $item->isi_pertanyaan }}</p>
+                        @php
+                            echo html_entity_decode($item->isi_pertanyaan)
+                        @endphp
                     </div>
                 </div>
             </div>
