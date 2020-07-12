@@ -77,7 +77,7 @@ class PertanyaanController extends Controller
         $upvote_quest = $item->votes()->where('pertanyaan_id', $id)->sum('upvote') == null ? 0 : $item->votes()->where('pertanyaan_id', $id)->sum('upvote');
         $downvote_quest = $item->votes()->where('pertanyaan_id', $id)->sum('downvote') == null ? 0 : $item->votes()->where('pertanyaan_id', $id)->sum('downvote');
         $vote_quest = $upvote_quest - $downvote_quest;
-        
+
         return view('questions.show', compact('item', 'user', 'vote_quest'));
     }
 
@@ -138,8 +138,8 @@ class PertanyaanController extends Controller
             foreach ( $vote as $value ) {
                 if ( $value->upvote == 1 && $value->pertanyaan_id == $request->pertanyaan_id ) return redirect()->back();
             }
-        } 
-        
+        }
+
         Vote::create([
             'upvote' => 1,
             'user_id' => Auth::id(),
@@ -147,7 +147,7 @@ class PertanyaanController extends Controller
         ]);
 
         $item = Vote::all()->last();
-        
+
         Reputasi::create([
             'reputasi' => 10,
             'user_id' => $item->pertanyaan->user_id
@@ -159,16 +159,16 @@ class PertanyaanController extends Controller
     public function questionDownvote(Request $request)
     {
         $user = User::findOrFail(Auth::id());
-        if ( $user->reputations->sum('reputasi') <= 15 ) { 
+        if ( $user->reputations->sum('reputasi') <= 15 ) {
             return redirect()->back()->with('pesan', 'Reputasi anda kurang dari 15');
         }
-        
+
         $vote = Vote::where('user_id', Auth::id())->get();
         if (count($vote) > 0 ) {
             foreach ( $vote as $value ) {
                 if ( $value->downvote == 1 && $value->pertanyaan_id == $request->pertanyaan_id ) return redirect()->back();
             }
-        } 
+        }
 
         Vote::create([
             'downvote' => 1,
@@ -177,7 +177,7 @@ class PertanyaanController extends Controller
         ]);
 
         $item = Vote::all()->last();
-        
+
         Reputasi::create([
             'minus' => 1,
             'user_id' => $item->pertanyaan->user_id

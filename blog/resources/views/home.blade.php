@@ -4,10 +4,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+  <div class="container">
     <div class="row">
         <div class="col-6 col-sm-4">
-
         </div>
         <div class="col-6 col-sm-4">
           <div class="card" style="width: auto;" >
@@ -19,26 +18,10 @@
           </div>
         </div>
         <div class="col-6 col-sm-4">
-
         </div>
     </div>
 </div>
-
-
-
-
   <!-- Nanti list banyak pertanyaan-->
-
-
-  <a class="dropdown-item" href="{{ route('logout') }}"
-    onclick="event.preventDefault();
-                  document.getElementById('logout-form').submit();">
-    {{ __('Logout') }}
-  </a>
-
-  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-  </form>
 
 @endsection
 
