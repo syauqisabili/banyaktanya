@@ -128,7 +128,13 @@
                             <span class="d-block">
                                 Dibuat oleh: <a href="{{ route('user.show', [$answer->user_id]) }}">{{ ucwords($answer->user->name) }} <small><i class="fas fa-external-link-alt"></i></small></a>
                             </span>
-                            <span class="d-block"><small><em>{{ date('l, d F Y', strtotime($answer->created_at)) }}</small></em></span>
+                            <span class="d-inline-block"><small><em>{{ date('l, d F Y', strtotime($answer->created_at)) }}</small></em></span>
+                            
+                            @if ( $answer->status == true )
+                                <div class="d-inline-block float-right">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 30px"></i>
+                                </div>
+                            @endif
                         </div>
 
                         @if ( $user->isOwner($answer) )
@@ -150,12 +156,6 @@
                                     <button class="btn btn-success btn-sm">Jadikan jawaban terbaik</button>
                                 </form>
                             </div>
-                        @endif
-
-                        @if ( $answer->status == true )
-                        <div class="d-inline-block float-right">
-                            <i class="fas fa-check-circle text-success" style="font-size: 50px"></i>
-                        </div>
                         @endif
                     </div>
 
