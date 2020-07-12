@@ -15,7 +15,7 @@
                                 </button>
                             </span>
                         </form>
-                        <h1><span class="badge badge-danger text-white">{{ $vote }}</span></h1>
+                        <h1><span class="badge badge-danger text-white">{{ $vote_quest }}</span></h1>
                         <form action="{{ route('pertanyaan.downvote') }}" method="post">
                             @csrf
                             <span class="d-block">
@@ -74,9 +74,56 @@
             @if ( $item->answers != null )
                 @foreach ($item->answers as $answer)
                     <div class="border-bottom {{ $answer->status == true ? 'border-success' : '' }}">
-                        @php
-                            echo html_entity_decode($answer->isi_jawaban); 
-                        @endphp
+                        <div class="d-flex">
+                            <div class="pr-2">
+                                <form action="{{ route('jawaban.upvote') }}" method="post">
+                                    @csrf
+                                    <span class="d-block">
+                                        <input type="hidden" name="pertanyaan_id" value="{{ $item->id }}">
+                                        <input type="hidden" name="jawaban_id" value="{{ $answer->id }}">
+                                        <button class="btn btn-sm">
+                                            <i class="fas fa-caret-up" style="font-size: 30px"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                                <h1>
+                                    <span class="badge badge-danger text-white">
+                                        @php
+                                            $upvote = 0;
+                                            $downvote = 0;
+                                        @endphp
+                                        @foreach ( $answer->votes as $vote )
+                                            @php
+                                                $up = $vote->upvote == null ? 0 : $vote->upvote;
+                                                $down = $vote->downvote == null ? 0 : $vote->downvote;
+                                                $upvote += $up;
+                                                $downvote += $down;
+                                            @endphp
+                                        @endforeach
+                                        @php
+                                            $totalvote = $upvote - $downvote;
+                                        @endphp
+                                        {{ $totalvote ?? 0 }}
+                                    </span>
+                                </h1>
+                                <form action="{{ route('jawaban.downvote') }}" method="post">
+                                    @csrf
+                                    <span class="d-block">
+                                        <button class="btn btn-sm">
+                                            <input type="hidden" name="pertanyaan_id" value="{{ $item->id }}">
+                                            <input type="hidden" name="jawaban_id" value="{{ $answer->id }}">
+                                            <i class="fas fa-caret-down" style="font-size: 30px"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
+                            <div class="pl-3 pt-3">
+                                @php
+                                    echo html_entity_decode($answer->isi_jawaban); 
+                                @endphp
+                            </div>
+                        </div>
+
                         <div class="pb-3">
                             <span class="d-block">
                                 Dibuat oleh: <a href="{{ route('user.show', [$answer->user_id]) }}">{{ ucwords($answer->user->name) }} <small><i class="fas fa-external-link-alt"></i></small></a>
@@ -105,56 +152,62 @@
                             </div>
                         @endif
 
-                        <div class="py-2">
-                            @if ( $answer->comments != null )
-                                @foreach ($answer->comments as $comment)
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-8 offset-md-4 border-bottom mb-3">
-                                            @php
-                                                echo html_entity_decode($comment->isi_komentar)
-                                            @endphp
-                                            <div class="pb-3">
-                                                <span class="d-block">
-                                                    Dibuat oleh: <a href="{{ route('user.show', [$comment->user_id]) }}">{{ ucwords($comment->user->name) }} <small><i class="fas fa-external-link-alt"></i></small></a>
-                                                </span>
-                                                <span class="d-block"><small><em>{{ date('l, d F Y', strtotime($comment->created_at)) }}</small></em></span>
-                                            </div>
+                        @if ( $answer->status == true )
+                        <div class="d-inline-block float-right">
+                            <i class="fas fa-check-circle text-success" style="font-size: 50px"></i>
+                        </div>
+                        @endif
+                    </div>
 
-                                            @if ( $user->isOwner($comment) )
-                                                <div class="d-inline-block mb-4">
-                                                    <a class="mr-1 btn btn-primary btn-sm" href="{{ route('komentar.edit', [$comment->id]) }}">Edit</a>
-                                                    <form class="d-inline-block" action="{{ route('komentar.destroy', [$comment->id]) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
-                                                </div>
-                                            @endif
-                                        </div>    
-                                    </div>
-                                </div>
-                                @endforeach
-                            @endif
-                            
-                            <div class="row">
-                                <div class="col-md-8 offset-md-4">
-                                    <form action="{{ route('komentar.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="jawaban_id" value="{{ $answer->id }}">
-                                        <div class="form-group">
-                                            <label for="komentar">Komentar</label>
-                                            <textarea name="isi_komentar" id="komentar" cols="30" rows="5"></textarea>
+                    <div class="py-2">
+                        @if ( $answer->comments != null )
+                            @foreach ($answer->comments as $comment)
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-8 offset-md-4 border-bottom mb-3">
+                                        @php
+                                            echo html_entity_decode($comment->isi_komentar)
+                                        @endphp
+                                        <div class="pb-3">
+                                            <span class="d-block">
+                                                Dibuat oleh: <a href="{{ route('user.show', [$comment->user_id]) }}">{{ ucwords($comment->user->name) }} <small><i class="fas fa-external-link-alt"></i></small></a>
+                                            </span>
+                                            <span class="d-block"><small><em>{{ date('l, d F Y', strtotime($comment->created_at)) }}</small></em></span>
                                         </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary btn-sm">Komentar</button>
-                                        </div>
-                                    </form>
+
+                                        @if ( $user->isOwner($comment) )
+                                            <div class="d-inline-block mb-4">
+                                                <a class="mr-1 btn btn-primary btn-sm" href="{{ route('komentar.edit', [$comment->id]) }}">Edit</a>
+                                                <form class="d-inline-block" action="{{ route('komentar.destroy', [$comment->id]) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm">Hapus</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </div>    
                                 </div>
                             </div>
+                            @endforeach
+                        @endif
+                    </div>
+                            
+                    <div class="row pt-3">
+                        <div class="col-md-8 offset-md-4">
+                            <form action="{{ route('komentar.store') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="jawaban_id" value="{{ $answer->id }}">
+                                <div class="form-group">
+                                    <label for="komentar">Komentar</label>
+                                    <textarea name="isi_komentar" id="komentar" class="komentar" cols="30" rows="5"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-sm">Komentar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    @endforeach
+                @endforeach
             @endif
         </div>
     </div>
@@ -167,7 +220,7 @@
         });
 
         tinymce.init({
-            selector: '#komentar',
+            selector: '.komentar',
             hight: 300,
         });
     </script>

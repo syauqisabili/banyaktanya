@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Pertanyaan;
 use App\Reputasi;
+use App\Jawaban;
 use App\Vote;
 use App\User;
 use App\Tag;
@@ -72,12 +73,12 @@ class PertanyaanController extends Controller
     public function show($id)
     {
         $user = new User;
-        $item = Pertanyaan::findOrFail($id);
-        $upvote = $item->votes->sum('upvote') == null ? 0 : $item->votes->sum('upvote');
-        $downvote = $item->votes->sum('downvote') == null ? 0 : $item->votes->sum('downvote');
-        $vote = $upvote - $downvote;
-
-        return view('questions.show', compact('item', 'user', 'vote'));
+        $item = Pertanyaan::findOrFail($id); //dd($item->votes);
+        $upvote_quest = $item->votes()->where('pertanyaan_id', $id)->sum('upvote') == null ? 0 : $item->votes()->where('pertanyaan_id', $id)->sum('upvote');
+        $downvote_quest = $item->votes()->where('pertanyaan_id', $id)->sum('downvote') == null ? 0 : $item->votes()->where('pertanyaan_id', $id)->sum('downvote');
+        $vote_quest = $upvote_quest - $downvote_quest;
+        
+        return view('questions.show', compact('item', 'user', 'vote_quest'));
     }
 
     /**

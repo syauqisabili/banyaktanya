@@ -19,4 +19,9 @@ class Vote extends Model
     {
         return $this->belongsTo('App\Pertanyaan');
     }
+
+    public function jawaban()
+    {
+        return $this->belongsTo('App\Jawaban');
+    }
 }

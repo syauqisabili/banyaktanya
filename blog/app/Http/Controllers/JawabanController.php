@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Pertanyaan;
 use App\Reputasi;
 use App\Jawaban;
+use App\Vote;
+use App\User;
 
 class JawabanController extends Controller
 {
@@ -101,5 +103,60 @@ class JawabanController extends Controller
     {
         Jawaban::findOrFail($id)->delete();
         return redirect()->back()->with('pesan', 'Jawaban telah dihapus');
+    }
+
+    public function answerUpvote(Request $request)
+    {
+        $vote = Vote::where('user_id', Auth::id())->get();
+        if (count($vote) > 0 ) {
+            foreach ( $vote as $value ) {
+                if ( $value->upvote == 1 && $value->jawaban_id == $request->jawaban_id ) return redirect()->back();
+            }
+        } 
+        
+        Vote::create([
+            'upvote' => 1,
+            'user_id' => Auth::id(),
+            'jawaban_id' => $request->jawaban_id
+        ]);
+
+        $item = Vote::all()->last();
+        
+        Reputasi::create([
+            'reputasi' => 10,
+            'user_id' => $item->jawaban->user_id
+        ]);
+
+        return redirect()->route('pertanyaan.show', [$request->pertanyaan_id]);
+    }
+
+    public function answerDownvote(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        if ( $user->reputations->sum('reputasi') <= 15 ) { 
+            return redirect()->back()->with('pesan', 'Reputasi anda kurang dari 15');
+        }
+        
+        $vote = Vote::where('user_id', Auth::id())->get();
+        if (count($vote) > 0 ) {
+            foreach ( $vote as $value ) {
+                if ( $value->downvote == 1 && $value->jawaban_id == $request->jawaban_id ) return redirect()->back();
+            }
+        } 
+
+        Vote::create([
+            'downvote' => 1,
+            'user_id' => Auth::id(),
+            'jawaban_id' => $request->jawaban_id
+        ]);
+
+        $item = Vote::all()->last();
+        
+        Reputasi::create([
+            'minus' => 1,
+            'user_id' => $item->jawaban->user_id
+        ]);
+
+        return redirect()->route('pertanyaan.show', [$request->pertanyaan_id]);
     }
 }

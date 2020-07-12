@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
      */
     Route::post('/pertanyaan/upvote', 'PertanyaanController@questionUpvote')->name('pertanyaan.upvote');
     Route::post('/pertanyaan/downvote', 'PertanyaanController@questionDownvote')->name('pertanyaan.downvote');
+    Route::post('/jawaban/upvote', 'JawabanController@answerUpvote')->name('jawaban.upvote');
+    Route::post('/jawaban/downvote', 'JawabanController@answerDownvote')->name('jawaban.downvote');
     Route::resource('/user', 'UserController');
     Route::resource('/pertanyaan', 'PertanyaanController');
     Route::resource('/jawaban', 'JawabanController');
