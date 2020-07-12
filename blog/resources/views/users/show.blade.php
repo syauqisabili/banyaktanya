@@ -23,7 +23,7 @@
                         </div>
                         <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab">
                             <div class="p-4" style="min-height: 200px">
-                                <div class="bg-secondary text-light pl-4">Pertanyaan Anda</div>
+                                <div class="bg-secondary text-light pl-4">Pertanyaan {{ $user->name }}</div>
                                 <ul class="border rounded py-2">
                                     @forelse ($user->questions as $item)
                                         <li><a href="{{ route('pertanyaan.show', [$item->id]) }}">{{ $item->judul }}</a></li>
