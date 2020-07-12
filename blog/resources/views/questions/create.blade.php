@@ -32,3 +32,11 @@
   </form>
 </div>
 @endsection
+@push('js')
+    <script src="{{ asset('plugins/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+    <script>
+        tinymce.init({
+          selector: '#question-isi'
+        });  
+    </script>    
+@endpush
