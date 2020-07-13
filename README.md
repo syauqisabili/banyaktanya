@@ -2,6 +2,7 @@
 Final project Sanbercode-Laravel: Banyaktanya
 
 Project clone dari stackoverflow ini telah selesai berdasarkan fitur fitur yang telah di tetapkan oleh Sanbercode
+
 Fitur fitur terpenuhi :
 1. Pengguna dapat melihat & membuat pertanyaan baru yang terdiri dari: judul, isi pertanyaan, dan tag (memerlukan autentikasi).
 2. Setiap pertanyaan memiliki penanda waktu (created_at, updated_at).
