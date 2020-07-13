@@ -15,3 +15,5 @@ Fitur fitur terpenuhi :
 10. Pembuat pertanyaan dapat menandai jawaban yang menurut dia paling tepat menyelesaikan masalahnya. 
 11. Setiap jawaban yang ditandai sebagai jawaban tepat maka pengguna yang membuat jawaban tersebut mendapatkan tambahan reputasi 15 poin.
 12. Pengguna yang boleh downvote adalah pengguna dengan reputasi minimal 15 poin
+
+Terimakasih untuk SanberCode.
