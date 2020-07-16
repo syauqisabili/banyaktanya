@@ -18,10 +18,22 @@ class PertanyaanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function filter($id)
+    {
+        if ( $id != null ) {
+            $tag = Tag::find($id);
+            $items = $tag->questions;
+            $tags  = Tag::orderBy('id', 'desc')->get();
+            return view('questions.index', compact('items', 'tags'));
+        }
+    }
+
     public function index()
     {
+        $tags  = Tag::orderBy('id', 'desc')->get();
         $items = Pertanyaan::orderBy('id', 'desc')->get();
-        return view('questions.index', compact('items'));
+
+        return view('questions.index', compact('items', 'tags'));
     }
 
     /**
@@ -110,11 +122,24 @@ class PertanyaanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $str_tag = $request->tag_pertanyaan;
+        $arr_tag = explode(',', $str_tag);
+
         $item = Pertanyaan::findOrFail($id);
         $item->update([
             'judul' => $request->judul,
             'isi_pertanyaan' => $request->isi_pertanyaan
         ]);
+
+        $question = Pertanyaan::find($id);
+
+        foreach( $arr_tag as $key => $value ) {
+            $tag = Tag::firstOrCreate([
+                'name' => $value,
+            ]);
+
+            $question->tags()->attach($tag);
+        }
 
         return redirect()->route('pertanyaan.show', [$item->id])->with('pesan', 'Pertanyaan telah diupdate');
     }

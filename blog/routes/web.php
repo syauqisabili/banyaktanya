@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
      * DELETE   /pertanyaan/{id}        .destroy
      * GET      /pertanyaan/{id}/edit   .edit
      */
+    Route::get('/pertanyaan/tag/{id}', 'PertanyaanController@filter')->name('pertanyaan.filter');
     Route::post('/pertanyaan/upvote', 'PertanyaanController@questionUpvote')->name('pertanyaan.upvote');
     Route::post('/pertanyaan/downvote', 'PertanyaanController@questionDownvote')->name('pertanyaan.downvote');
     Route::post('/jawaban/upvote', 'JawabanController@answerUpvote')->name('jawaban.upvote');

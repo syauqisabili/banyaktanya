@@ -5,6 +5,13 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-2">
                 <h2>Tags</h2>
+                <span class="d-block pt-4"><i class="fas fa-tags"></i> 
+                    @foreach ($tags as $tag)
+                        <a href="{{ route('pertanyaan.filter', [$tag->id]) }}">
+                            <span class="badge badge-dark">{{ $tag->name }}</span>
+                        </a>
+                    @endforeach
+                </span>
             </div>
             <div class="col-md-8">
                 <div class="d-flex justify-content-between">
@@ -18,6 +25,11 @@
                             @php
                                 echo html_entity_decode($item->isi_pertanyaan);
                             @endphp 
+                            <span class="d-block"><i class="fas fa-tags"></i> 
+                                @foreach ($item->tags as $tag)
+                                    <span class="badge badge-dark">{{ $tag->name }}</span>
+                                @endforeach
+                            </span>
                             <p><a href="{{ route('pertanyaan.show', [$item->id]) }}">Lihat Detail</a> <span class="d-inline-block ml-3">{{ count($item->answers) }} Jawaban</span></p>
                         </div>
                     @endforeach
